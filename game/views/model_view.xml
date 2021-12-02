@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="minesweeper_form_view" model="ir.ui.view">
+            <field name="name">minesweeper.form.view</field>
+            <field name="model">minesweeper</field>
+            <field name="arch" type="xml">
+                <form string="Minesweeper">
+                    <sheet>
+                        <group col="4" colspan="2">
+                            <field name="player_name"/>
+                            <field name="no_of_wins"/>
+                            <field name="no_of_losses"/>
+                            <field name="avg_game_duration"/>
+                            <field name="field_size"/>
+                            <field name="no_games"/>
+                            <field name="country_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="minesweeper_tree_view" model="ir.ui.view">
+            <field name="name">minesweeper.tree.view</field>
+            <field name="model">minesweeper</field>
+            <field name="arch" type="xml">
+                <tree string="Minesweeper">
+                    <field name="player_name"/>
+                    <field name="no_of_wins"/>
+                    <field name="no_of_losses"/>
+                    <field name="avg_game_duration"/>
+                    <field name="field_size"/>
+                    <field name="no_games"/>
+                    <field name="country_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="minesweeper_search_view" model="ir.ui.view">
+            <field name="name">minesweeper.search.view</field>
+            <field name="model">minesweeper</field>
+            <field name="arch" type="xml">
+                <search string="Minesweeper">
+                    <field name="player_name"/>
+                    <field name="no_of_wins"/>
+                    <field name="no_of_losses"/>
+                    <field name="avg_game_duration"/>
+                    <field name="field_size"/>
+                    <field name="no_games"/>
+                    <field name="country_id"/>
+                    <group expand="0" string="Group By...">
+                        <filter
+                            name="field_size"
+                            string="Field Size"
+                            domain="[]"
+                            context="{'group_by':'field_size'}"
+                        />
+                        <filter
+                            name="country_id"
+                            string="Residence Country"
+                            domain="[]"
+                            context="{'group_by':'country_id'}"
+                        />
+                </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="minesweeper_kanban_view" model="ir.ui.view">
+            <field name="name">minesweeper.kanban.view</field>
+            <field name="model">minesweeper</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="player_name"/>
+                    <field name="no_of_wins"/>
+                    <field name="no_of_losses"/>
+                    <field name="avg_game_duration"/>
+                    <field name="field_size"/>
+                    <field name="no_games"/>
+                    <field name="country_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong><field name="player_name"/></strong>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <span class="badge badge-pill"><t t-esc="record.player_name.value"/></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <strong># Wins: </strong><t t-esc="record.no_of_wins.value"/>
+                                </div>
+                                <div>
+                                    <strong># Losses: </strong><t t-esc="record.no_of_losses.value"/>
+                                </div>
+                                <div>
+                                    <strong>Avg Game Duration: </strong><t t-esc="record.avg_game_duration.value"/>
+                                </div>
+                                <div>
+                                    <strong>Residence Country: </strong><t t-esc="record.country_id.value"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="minsweeper_graph_view" model="ir.ui.view">
+            <field name="name">minesweeper.graph.view</field>
+            <field name="model">minesweeper</field>
+            <field name="arch" type="xml">
+                <graph string="Minsweeper Analysis" stacked="False" sample="1" disable_linking="1">
+                    <field name="player_name" type="row"/>
+                    <field name="country_id" type="col"/>
+                    <field name="no_of_wins" type="measure"/>
+                    <field name="no_of_losses" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="minesweeper_action" model="ir.actions.act_window">
+            <field name="name">Minsweeper</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">minesweeper</field>
+            <field name="view_mode">kanban,tree,form,graph</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+              </p><p>
+                <!-- More details about what a user can do with this object will be OK -->
+              </p>
+            </field>
+        </record>
+
+        <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+        <menuitem id="game_menu_id" name="Game" sequence="1"/>
+
+        <!-- This Menu Item Must have a parent -->
+        <menuitem id="game_menu_categ_id" name="Minsweeper" parent="game.game_menu_id" sequence="1"/>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="minesweeper_menu" name="Minsweeper" parent="game.game_menu_categ_id" action="minesweeper_action"
+                  sequence="1"/>
+
+    </data>
+</odoo>
